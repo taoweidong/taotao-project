@@ -55,4 +55,14 @@ taotao-parent -- 管理依赖jar包的版本，全局，公司级别
 
 添加添加相关配置文件，加入静态资源。
 
-测试
+注意taotao-manager-mapper工程中的Dao类和mapper映射文件必须在同一个文件夹中，否则在编译之后会报错，找不到Mapper文件。
+
+## 测试
+
+- 编写Sql语句：select * from tb_item where id = '536563'
+- Dao层：使用MyBatis逆向工程生成Dao和Mapper
+- Services层：接收商品Id，调用Dao层，查询商品信息，返回pojo对象
+- Controller层：接收页面请求ID,调用Services查询商品信息。直接返回JSON数据
+- 至此，项目第一阶段，环境搭建，框架整合完毕。
+
+![1528436417315](C:\Users\Taowd\AppData\Local\Temp\1528436417315.png)

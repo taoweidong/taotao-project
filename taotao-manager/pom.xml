@@ -27,6 +27,7 @@
     </dependencies>
 
     <build>
+
         <!--配置tomcat插件-->
         <plugins>
             <plugin>
