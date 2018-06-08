@@ -1,6 +1,7 @@
 package com.taotao.service;
 
 import com.taowd.pojo.TbItem;
+import com.taowd.utils.EasyUIResult;
 
 /**
  * @ClassName ItemService
@@ -18,4 +19,13 @@ public interface ItemService {
      * @return
      */
     TbItem getItemById(Long itemId);
+
+    /**
+     * 分页查询所有数据
+     *
+     * @param pageIndex 第几页
+     * @param pageCount 本页条目数
+     * @return 数据集合
+     */
+    EasyUIResult getItemList(Integer pageIndex, Integer pageCount);
 }

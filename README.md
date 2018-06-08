@@ -5,13 +5,14 @@
 # 2018年6月5日
 
 后台管理系统工程结构：
-taotao-parent -- 管理依赖jar包的版本，全局，公司级别
-	|--taotao-common  --- 通用组件、工具类
-	|--taotao-manage  -- (聚合工程)后台系统
- 		|--com.taotao.manage.web
-  		|--com.taotao.manage.service
-  		|--com.taotao.manage.mapper
-  		|--com.taotao.manage.pojo
+> taotao-parent -- 管理依赖jar包的版本，全局，公司级别
+
+- taotao-common  --- 通用组件、工具类
+	- taotao-manage  -- (聚合工程)后台系统
+		- com.taotao.manage.web
+		- com.taotao.manage.service
+		- com.taotao.manage.mapper
+		- com.taotao.manage.pojo
 
 
 # 2018年6月6日 
@@ -65,4 +66,12 @@ taotao-parent -- 管理依赖jar包的版本，全局，公司级别
 - Controller层：接收页面请求ID,调用Services查询商品信息。直接返回JSON数据
 - 至此，项目第一阶段，环境搭建，框架整合完毕。
 
-![1528436417315](C:\Users\Taowd\AppData\Local\Temp\1528436417315.png)
+![](https://i.imgur.com/Pmd0R9e.png)
+
+# 2018年6月8日
+
+## PageHeler分页插件
+
+> 一个MyBatis的分页插件，官网地址https://pagehelper.github.io/
+
+完成商品列表查询功能，并使用分页插件

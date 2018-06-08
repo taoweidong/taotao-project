@@ -4,4 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <!--配置文件必须有  SSM框架要求-->
+
+    <!--配置Mybatis的分页插件PageHelper-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <!--设置数据库类型Oracle,MySql.SQLite,MariaDB,Hsqldb,PostgreSQL六中数据库；注意：没有默认值，必须指定该属性。-->
+            <property name="dialect" value="mysql"></property>
+        </plugin>
+    </plugins>
 </configuration>
