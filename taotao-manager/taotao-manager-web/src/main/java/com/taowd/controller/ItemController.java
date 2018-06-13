@@ -2,7 +2,9 @@ package com.taowd.controller;
 
 import com.taotao.service.ItemService;
 import com.taowd.pojo.TbItem;
+import com.taowd.pojo.TbItemDesc;
 import com.taowd.utils.EasyUIResult;
+import com.taowd.utils.TaotaoResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,23 @@ public class ItemController {
     public TbItem getItemById(@PathVariable Long itemId) {
         TbItem item = itemService.getItemById(itemId);
         return item;
+    }
+
+    /**
+     * 新增商品功能
+     *
+     * @param item 商品信息
+     * @param desc 商品描述
+     * @return
+     */
+    @RequestMapping("/save")
+    @ResponseBody
+    public TaotaoResult addItem(TbItem item, String desc) {
+        TbItemDesc tbItemDesc = new TbItemDesc();
+        tbItemDesc.setItemDesc(desc);
+
+        TaotaoResult result = itemService.addItem(item, tbItemDesc);
+        return result;
     }
 
     /**

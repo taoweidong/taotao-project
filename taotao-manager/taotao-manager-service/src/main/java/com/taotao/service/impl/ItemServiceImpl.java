@@ -3,13 +3,19 @@ package com.taotao.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.taotao.service.ItemService;
+import com.taowd.dao.TbItemDescMapper;
 import com.taowd.dao.TbItemMapper;
 import com.taowd.pojo.TbItem;
+import com.taowd.pojo.TbItemDesc;
 import com.taowd.pojo.TbItemExample;
 import com.taowd.utils.EasyUIResult;
+import com.taowd.utils.ExceptionUtil;
+import com.taowd.utils.IDUtils;
+import com.taowd.utils.TaotaoResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +30,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private TbItemMapper tbItemMapper;
+
+    @Autowired
+    private TbItemDescMapper tbItemDescMapper;
 
     /**
      * 根据商品Id查询商品信息
@@ -67,5 +76,33 @@ public class ItemServiceImpl implements ItemService {
         //返回的结果对象
         EasyUIResult easyUIResult = new EasyUIResult(pageSum, itemList);
         return easyUIResult;
+    }
+
+    @Override
+    public TaotaoResult addItem(TbItem item, TbItemDesc itemDesc) {
+        try {
+            //生成商品id
+            //可以使用redis的自增长key，在没有redis之前使用时间+随机数策略生成
+            Long itemId = IDUtils.genItemId();
+            //补全不完整的字段
+            item.setId(itemId);
+            item.setStatus((byte) 1);
+            Date date = new Date();
+            item.setCreated(date);
+            item.setUpdated(date);
+            //把数据插入到商品表
+            tbItemMapper.insert(item);
+
+            //添加商品描述
+            itemDesc.setItemId(itemId);
+            itemDesc.setCreated(date);
+            itemDesc.setUpdated(date);
+            //把数据插入到商品描述表
+            tbItemDescMapper.insert(itemDesc);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return TaotaoResult.build(500, ExceptionUtil.getStackTrace(e));
+        }
+        return TaotaoResult.ok();
     }
 }

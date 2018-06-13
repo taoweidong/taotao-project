@@ -1,7 +1,9 @@
 package com.taotao.service;
 
 import com.taowd.pojo.TbItem;
+import com.taowd.pojo.TbItemDesc;
 import com.taowd.utils.EasyUIResult;
+import com.taowd.utils.TaotaoResult;
 
 /**
  * @ClassName ItemService
@@ -28,4 +30,13 @@ public interface ItemService {
      * @return 数据集合
      */
     EasyUIResult getItemList(Integer pageIndex, Integer pageCount);
+
+    /**
+     * 添加数据
+     *
+     * @param item
+     * @param itemDesc
+     * @return
+     */
+    TaotaoResult addItem(TbItem item, TbItemDesc itemDesc);
 }
