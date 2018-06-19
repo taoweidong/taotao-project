@@ -105,13 +105,17 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.taowd.pojo.TbContentCategory">
-    insert into tb_content_category (id, parent_id, name, 
-      status, sort_order, is_parent, 
-      created, updated)
-    values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{sortOrder,jdbcType=INTEGER}, #{isParent,jdbcType=BIT}, 
-      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
-  </insert>
+        <selectKey keyProperty="id" resultType="long" order="AFTER">
+            /*主键返回*/
+            select last_insert_id()
+        </selectKey>
+        insert into tb_content_category (id, parent_id, name,
+        status, sort_order, is_parent,
+        created, updated)
+        values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+        #{status,jdbcType=INTEGER}, #{sortOrder,jdbcType=INTEGER}, #{isParent,jdbcType=BIT},
+        #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
+    </insert>
     <insert id="insertSelective" parameterType="com.taowd.pojo.TbContentCategory">
         insert into tb_content_category
         <trim prefix="(" suffix=")" suffixOverrides=",">
