@@ -21,6 +21,30 @@ public interface ContentCategoryService {
      */
     List<EasyUITreeNode> getContentCategoryList(long parentid);
 
+    /**
+     * 添加节点数据
+     *
+     * @param parentid
+     * @param name
+     * @return
+     */
     TaotaoResult addNode(long parentid, String name);
 
+    /**
+     * 更新节点数据
+     *
+     * @param id
+     * @param name
+     * @return
+     */
+    TaotaoResult updateNode(long id, String name);
+
+    /**
+     * 删除节点
+     *
+     * @param parentId
+     * @param id
+     * @return
+     */
+    TaotaoResult deleteNode(Long parentId, Long id);
 }

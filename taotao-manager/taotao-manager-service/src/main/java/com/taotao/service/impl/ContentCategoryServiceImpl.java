@@ -84,4 +84,55 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
         return TaotaoResult.ok(node);
 
     }
+
+    /**
+     * 更新节点数据
+     *
+     * @param id
+     * @param name
+     * @return
+     */
+    @Override
+    public TaotaoResult updateNode(long id, String name) {
+        TbContentCategory node = new TbContentCategory();
+        node.setId(id);
+        node.setName(name);
+
+        contentCategoryMapper.updateByPrimaryKeySelective(node);
+
+        return TaotaoResult.ok(node);
+    }
+
+    /**
+     * 删除节点
+     *
+     * @param parentId
+     * @param id
+     * @return
+     */
+    @Override
+    public TaotaoResult deleteNode(Long parentId, Long id) {
+
+        //拿到当前要删除节点的父节点信息
+        TbContentCategory node = contentCategoryMapper.selectByPrimaryKey(id);
+
+        //删除子节点
+        contentCategoryMapper.deleteByPrimaryKey(id);
+
+        //删除之后查询该节点的父节点是否还有子节点
+        TbContentCategoryExample example = new TbContentCategoryExample();
+        TbContentCategoryExample.Criteria criteria = example.createCriteria();
+        criteria.andParentIdEqualTo(node.getParentId());
+        List<TbContentCategory> list = contentCategoryMapper.selectByExample(example);
+
+        if (list == null || list.size() <= 0) {//说明已经没有子节点了
+            //取父节点的内容
+            TbContentCategory parentNode = contentCategoryMapper.selectByPrimaryKey(node.getParentId());
+            if (!parentNode.getIsParent()) {
+                parentNode.setIsParent(false);
+                contentCategoryMapper.updateByPrimaryKey(parentNode);
+            }
+        }
+        return TaotaoResult.ok();
+    }
 }

@@ -25,6 +25,13 @@ public class ContentCategoryController {
     @Autowired
     private ContentCategoryService contentCategoryService;
 
+    /**
+     * 节点列表
+     *
+     * @param parentid
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/list")
     @ResponseBody
     public List<EasyUITreeNode> getContentCategoryList(@RequestParam(value = "id", defaultValue = "0") long parentid) throws Exception {
@@ -33,6 +40,14 @@ public class ContentCategoryController {
         return list;
     }
 
+    /**
+     * 添加节点
+     *
+     * @param parentId
+     * @param name
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/create")
     @ResponseBody
     public TaotaoResult addNode(Long parentId, String name) throws Exception {
@@ -42,5 +57,18 @@ public class ContentCategoryController {
         return result;
     }
 
+    @RequestMapping("/update")
+    @ResponseBody
+    public TaotaoResult updateNode(Long id, String name) {
+        TaotaoResult result = contentCategoryService.updateNode(id, name);
+        return result;
+    }
 
+    @RequestMapping("/delete")
+    @ResponseBody
+    public TaotaoResult deleteNode(Long parentId, Long id) {
+        System.out.println("parentId:" + parentId + " id:" + id);
+        TaotaoResult result = contentCategoryService.deleteNode(parentId, id);
+        return result;
+    }
 }
