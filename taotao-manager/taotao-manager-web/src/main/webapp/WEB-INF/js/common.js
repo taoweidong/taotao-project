@@ -244,7 +244,9 @@ var TT = TAOTAO = {
                         var input = _self.siblings("input");
                         input.parent().find("img").remove();
                         input.val(url);
+                        //设置图片回显
                         input.after("<a href='" + url + "' target='_blank'><img src='" + url + "' width='80' height='50'/></a>");
+                        //关掉窗口
                         this.hideDialog();
                     }
                 });
