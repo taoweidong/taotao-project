@@ -13,6 +13,8 @@ public interface TbContentMapper {
 
     int deleteByPrimaryKey(Long id);
 
+    int deleteByIds(String[] ids);
+
     int insert(TbContent record);
 
     int insertSelective(TbContent record);

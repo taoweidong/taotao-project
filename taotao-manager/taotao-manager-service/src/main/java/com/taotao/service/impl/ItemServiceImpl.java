@@ -8,10 +8,7 @@ import com.taowd.dao.TbItemMapper;
 import com.taowd.pojo.TbItem;
 import com.taowd.pojo.TbItemDesc;
 import com.taowd.pojo.TbItemExample;
-import com.taowd.utils.EasyUIResult;
-import com.taowd.utils.ExceptionUtil;
-import com.taowd.utils.IDUtils;
-import com.taowd.utils.TaotaoResult;
+import com.taowd.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -99,6 +96,60 @@ public class ItemServiceImpl implements ItemService {
             itemDesc.setUpdated(date);
             //把数据插入到商品描述表
             tbItemDescMapper.insert(itemDesc);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return TaotaoResult.build(500, ExceptionUtil.getStackTrace(e));
+        }
+        return TaotaoResult.ok();
+    }
+
+    /**
+     * 更新操作
+     *
+     * @param item
+     * @param tbItemDesc
+     * @return
+     */
+    @Override
+    public TaotaoResult updateItem(TbItem item, TbItemDesc tbItemDesc) {
+        try {
+            //生成商品id
+            //可以使用redis的自增长key，在没有redis之前使用时间+随机数策略生成
+            //补全不完整的字段
+            item.setStatus((byte) 1);
+            Date date = new Date();
+            item.setUpdated(date);
+            item.setCreated(date);
+            //更新数据
+            tbItemMapper.updateByPrimaryKey(item);
+
+            //添加商品描述
+            tbItemDesc.setCreated(date);
+            tbItemDesc.setUpdated(date);
+
+            System.out.println("待更新的数据：" + JsonUtils.objectToJson(tbItemDesc));
+
+            //更新描述
+            tbItemDescMapper.updateByPrimaryKey(tbItemDesc);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return TaotaoResult.build(500, ExceptionUtil.getStackTrace(e));
+        }
+        return TaotaoResult.ok();
+    }
+
+    @Override
+    public TaotaoResult getDescById(Long id) {
+
+        TbItemDesc tbItemDesc = tbItemDescMapper.selectByPrimaryKey(id);
+
+        return TaotaoResult.ok(tbItemDesc);
+    }
+
+    @Override
+    public TaotaoResult deleteItemById(String[] ids) {
+        try {
+            tbItemMapper.deleteById(ids);
         } catch (Exception e) {
             e.printStackTrace();
             return TaotaoResult.build(500, ExceptionUtil.getStackTrace(e));

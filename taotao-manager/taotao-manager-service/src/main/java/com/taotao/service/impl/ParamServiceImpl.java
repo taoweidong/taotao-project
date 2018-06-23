@@ -7,6 +7,7 @@ import com.taowd.dao.TbItemParamMapper;
 import com.taowd.pojo.TbItemParam;
 import com.taowd.pojo.TbItemParamExample;
 import com.taowd.utils.EasyUIResult;
+import com.taowd.utils.ExceptionUtil;
 import com.taowd.utils.TaotaoResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,5 +80,31 @@ public class ParamServiceImpl implements ParamService {
 
         return result;
 
+    }
+
+    @Override
+    public TaotaoResult getParamById(Long id) {
+        TbItemParam tbItemParam = itemParamMapper.selectByPrimaryKey(id);
+
+        return TaotaoResult.ok(tbItemParam);
+    }
+
+    /**
+     * 删除功能
+     *
+     * @param ids
+     * @return
+     */
+    @Override
+    public TaotaoResult deleteItemById(String[] ids) {
+
+        try {
+            itemParamMapper.deleteByIds(ids);
+        } catch (Exception ex) {
+            return TaotaoResult.build(500, ExceptionUtil.getStackTrace(ex));
+        }
+
+
+        return TaotaoResult.ok();
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Date 2018/6/8 14:08
  * @Version V1.0
  */
-@Controller("/test")
+@Controller
 public class PageController {
 
     /**

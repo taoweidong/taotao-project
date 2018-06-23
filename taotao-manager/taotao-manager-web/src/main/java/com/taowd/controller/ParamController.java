@@ -4,6 +4,7 @@ import com.taotao.service.ParamService;
 import com.taowd.pojo.TbItemParam;
 import com.taowd.utils.EasyUIResult;
 import com.taowd.utils.TaotaoResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,6 +58,25 @@ public class ParamController {
     public EasyUIResult getItemList(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "30") Integer rows) {
         //查询结果
         EasyUIResult result = paramService.getItemParamList(page, rows);
+        return result;
+    }
+
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public TaotaoResult deleteParam(String ids) {
+        if (StringUtils.isEmpty(ids)) {
+            return TaotaoResult.build(500, "删除失败，id不能为空！");
+        }
+        String[] idsArr = ids.split(",");
+        TaotaoResult result = paramService.deleteItemById(idsArr);
+        return result;
+    }
+
+    @RequestMapping("/item/query/{id}")
+    @ResponseBody
+    public TaotaoResult getParamInfo(@PathVariable Long id) {
+        TaotaoResult result = paramService.getParamById(id);
         return result;
     }
 

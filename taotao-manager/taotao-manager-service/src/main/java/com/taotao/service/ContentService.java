@@ -44,5 +44,5 @@ public interface ContentService {
      * @param ids
      * @return
      */
-    TaotaoResult deleteContent(Long ids);
+    TaotaoResult deleteContent(String[] ids);
 }

@@ -39,4 +39,23 @@ public interface ItemService {
      * @return
      */
     TaotaoResult addItem(TbItem item, TbItemDesc itemDesc);
+
+    /**
+     * 更新操作
+     *
+     * @param item
+     * @param tbItemDesc
+     * @return
+     */
+    TaotaoResult updateItem(TbItem item, TbItemDesc tbItemDesc);
+
+    /**
+     * 根据id获取描述
+     *
+     * @param id
+     * @return
+     */
+    TaotaoResult getDescById(Long id);
+
+    TaotaoResult deleteItemById(String[] ids);
 }

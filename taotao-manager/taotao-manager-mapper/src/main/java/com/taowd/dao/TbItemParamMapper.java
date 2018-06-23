@@ -2,8 +2,9 @@ package com.taowd.dao;
 
 import com.taowd.pojo.TbItemParam;
 import com.taowd.pojo.TbItemParamExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TbItemParamMapper {
     int countByExample(TbItemParamExample example);
@@ -11,6 +12,14 @@ public interface TbItemParamMapper {
     int deleteByExample(TbItemParamExample example);
 
     int deleteByPrimaryKey(Long id);
+
+    /**
+     * 根据id删除信息
+     *
+     * @param ids
+     * @return
+     */
+    int deleteByIds(String[] ids);
 
     int insert(TbItemParam record);
 

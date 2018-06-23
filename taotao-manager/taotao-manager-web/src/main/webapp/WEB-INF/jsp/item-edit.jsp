@@ -84,28 +84,28 @@
         $("#itemeEditForm [name=price]").val(eval($("#itemeEditForm [name=priceView]").val()) * 1000);
         itemEditEditor.sync();
 
-        var paramJson = [];
-        $("#itemeEditForm .params li").each(function (i, e) {
-            var trs = $(e).find("tr");
-            var group = trs.eq(0).text();
-            var ps = [];
-            for (var i = 1; i < trs.length; i++) {
-                var tr = trs.eq(i);
-                ps.push({
-                    "k": $.trim(tr.find("td").eq(0).find("span").text()),
-                    "v": $.trim(tr.find("input").val())
-                });
-            }
-            paramJson.push({
-                "group": group,
-                "params": ps
-            });
-        });
-        paramJson = JSON.stringify(paramJson);
+        /*  var paramJson = [];
+          $("#itemeEditForm .params li").each(function (i, e) {
+              var trs = $(e).find("tr");
+              var group = trs.eq(0).text();
+              var ps = [];
+              for (var i = 1; i < trs.length; i++) {
+                  var tr = trs.eq(i);
+                  ps.push({
+                      "k": $.trim(tr.find("td").eq(0).find("span").text()),
+                      "v": $.trim(tr.find("input").val())
+                  });
+              }
+              paramJson.push({
+                  "group": group,
+                  "params": ps
+              });
+          });
+          paramJson = JSON.stringify(paramJson);
 
-        $("#itemeEditForm [name=itemParams]").val(paramJson);
+          $("#itemeEditForm [name=itemParams]").val(paramJson);*/
 
-        $.post("/rest/item/update", $("#itemeEditForm").serialize(), function (data) {
+        $.post("/item/update", $("#itemeEditForm").serialize(), function (data) {
             if (data.status == 200) {
                 $.messager.alert('提示', '修改商品成功!', 'info', function () {
                     $("#itemEditWindow").window('close');

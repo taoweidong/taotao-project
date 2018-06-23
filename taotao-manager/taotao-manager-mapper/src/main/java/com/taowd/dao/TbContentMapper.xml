@@ -131,6 +131,15 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
+
+    <!--实现根据id批量删除功能-->
+    <delete id="deleteByIds" parameterType="java.lang.String">
+        DELETE FROM tb_content WHERE id IN
+        <foreach item="idItem" collection="array" open="(" separator="," close=")">
+            #{idItem}
+        </foreach>
+    </delete>
+
     <insert id="insert" parameterType="com.taowd.pojo.TbContent">
     insert into tb_content (id, category_id, title, 
       sub_title, title_desc, url, 

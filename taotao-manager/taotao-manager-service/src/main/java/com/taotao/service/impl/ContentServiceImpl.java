@@ -81,9 +81,9 @@ public class ContentServiceImpl implements ContentService {
      * @return
      */
     @Override
-    public TaotaoResult deleteContent(Long ids) {
+    public TaotaoResult deleteContent(String[] ids) {
 
-        tbContentMapper.deleteByPrimaryKey(ids);
+        tbContentMapper.deleteByIds(ids);
 
         return TaotaoResult.ok();
     }

@@ -26,4 +26,8 @@ public interface ParamService {
      * @return
      */
     EasyUIResult getItemParamList(Integer page, Integer rows);
+
+    TaotaoResult getParamById(Long id);
+
+    TaotaoResult deleteItemById(String[] ids);
 }

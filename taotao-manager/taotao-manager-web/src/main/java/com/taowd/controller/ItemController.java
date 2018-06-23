@@ -4,7 +4,9 @@ import com.taotao.service.ItemService;
 import com.taowd.pojo.TbItem;
 import com.taowd.pojo.TbItemDesc;
 import com.taowd.utils.EasyUIResult;
+import com.taowd.utils.JsonUtils;
 import com.taowd.utils.TaotaoResult;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +57,60 @@ public class ItemController {
     }
 
     /**
+     * 更新操作
+     *
+     * @param item
+     * @param desc
+     * @return
+     */
+    @RequestMapping("/update")
+    @ResponseBody
+    public TaotaoResult updateItem(TbItem item, String desc) {
+        TbItemDesc tbItemDesc = new TbItemDesc();
+        tbItemDesc.setItemDesc(desc);
+        tbItemDesc.setItemId(item.getId());
+
+        System.out.println(desc);
+
+        logger.info("条目信息：" + JsonUtils.objectToJson(item));
+
+        logger.info("描述信息：" + JsonUtils.objectToJson(tbItemDesc));
+        TaotaoResult result = itemService.updateItem(item, tbItemDesc);
+        return result;
+    }
+
+    @RequestMapping("/edit")
+    @ResponseBody
+    public TaotaoResult editItem(TbItem item, String desc) {
+        TbItemDesc tbItemDesc = new TbItemDesc();
+        tbItemDesc.setItemDesc(desc);
+        tbItemDesc.setItemId(item.getId());
+
+        TaotaoResult result = itemService.addItem(item, tbItemDesc);
+        return result;
+    }
+
+    @RequestMapping("query/item/desc/{id}")
+    @ResponseBody
+    public TaotaoResult getDesc(@PathVariable Long id) {
+
+        TaotaoResult result = itemService.getDescById(id);
+        return result;
+    }
+
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public TaotaoResult deleteItem(String ids) {
+        if (StringUtils.isEmpty(ids)) {
+            return TaotaoResult.build(500, "删除失败，id不能为空！");
+        }
+        String[] idsArr = ids.split(",");
+        TaotaoResult result = itemService.deleteItemById(idsArr);
+        return result;
+    }
+
+    /**
      * 查询商品列表
      *
      * @return
@@ -66,4 +122,6 @@ public class ItemController {
         logger.info("查询商品列表：page" + page + " row" + rows);
         return itemService.getItemList(page, rows);
     }
+
+
 }

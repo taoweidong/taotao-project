@@ -12,6 +12,7 @@ import com.taotao.service.ContentService;
 import com.taowd.pojo.TbContent;
 import com.taowd.utils.EasyUIResult;
 import com.taowd.utils.TaotaoResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,8 +63,12 @@ public class ContentController {
 
     @RequestMapping("/delete")
     @ResponseBody
-    public TaotaoResult delete(Long ids) {
-        TaotaoResult result = contentService.deleteContent(ids);
+    public TaotaoResult delete(String ids) {
+        if (StringUtils.isEmpty(ids)) {
+            return TaotaoResult.build(500, "删除失败，id不能为空！");
+        }
+        String[] idsArr = ids.split(",");
+        TaotaoResult result = contentService.deleteContent(idsArr);
         return result;
     }
 }
