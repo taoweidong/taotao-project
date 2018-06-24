@@ -31,7 +31,6 @@ public class ContentController {
 
         try {
             List<TbContent> contentList = contentService.getContentList(contentCategoryId);
-
             return TaotaoResult.ok(contentList);
         } catch (Exception e) {
             e.printStackTrace();

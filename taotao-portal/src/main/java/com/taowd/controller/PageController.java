@@ -1,6 +1,9 @@
 package com.taowd.controller;
 
+import com.taowd.service.ContentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -13,8 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class PageController {
 
+
+    @Autowired
+    private ContentService contentService;
+
     @RequestMapping("/index")
-    public String showIndex() throws Exception {
+    public String showIndex(Model model) throws Exception {
+        String result = contentService.getContentList();
+        model.addAttribute("ad1", result);//前台通过el表达式获取值
         return "index";
     }
 
