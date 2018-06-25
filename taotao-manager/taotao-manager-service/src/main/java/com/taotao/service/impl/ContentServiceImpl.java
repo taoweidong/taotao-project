@@ -7,8 +7,10 @@ import com.taowd.dao.TbContentMapper;
 import com.taowd.pojo.TbContent;
 import com.taowd.pojo.TbContentExample;
 import com.taowd.utils.EasyUIResult;
+import com.taowd.utils.HttpClientUtil;
 import com.taowd.utils.TaotaoResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -26,6 +28,11 @@ public class ContentServiceImpl implements ContentService {
 
     @Autowired
     private TbContentMapper tbContentMapper;
+
+    @Value("${REST_BASE_URL}")
+    private String REST_BASE_URL;
+    @Value("${REST_CONTENT_SYNC_URL}")
+    private String REST_CONTENT_SYNC_URL;
 
     @Override
     public EasyUIResult queryList(Integer pageIndex, Integer pageCount, Long categoryId) {
@@ -60,6 +67,13 @@ public class ContentServiceImpl implements ContentService {
         content.setUpdated(new Date());
         //插入操作
         tbContentMapper.insert(content);
+
+        //添加缓存同步逻辑
+        try {
+            HttpClientUtil.doGet(REST_BASE_URL + REST_CONTENT_SYNC_URL + content.getCategoryId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return TaotaoResult.ok();
     }
