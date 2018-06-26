@@ -14,6 +14,7 @@
         <module>taotao-portal</module>
         <module>taotao-rest</module>
         <module>taotao-pagehelper</module>
+        <module>taotao-search</module>
     </modules>
 
     <!-- 集中定义依赖版本号 -->
