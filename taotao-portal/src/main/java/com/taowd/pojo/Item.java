@@ -1,4 +1,4 @@
-package com.taotao.search.pojo;
+package com.taowd.pojo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,9 +6,9 @@ import lombok.ToString;
 
 /**
  * @ClassName Item
- * @Description 搜索实体
+ * @Description TODO
  * @Author Taowd
- * @Date 2018/6/26 22:48
+ * @Date 2018/6/27 23:03
  * @Version V1.0
  */
 @Setter
@@ -22,5 +22,4 @@ public class Item {
     private String image;
     private String category_name;
     private String item_des;
-
 }
